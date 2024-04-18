@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registration Form</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    #registrationForm {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+        background-color: #cf189e;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    .error {
+        color: red;
+        font-size: 0.8em;
+        margin-top: 5px;
+    }
+
+    /* Output Section */
+    #output {
+        display: none;
+    }
+</style>
+</head>
+<body>
+<div id="registrationForm">
+    <h2>Registration Form</h2>
+    <form id="regForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <span id="nameError" class="error"></span>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <span id="emailError" class="error"></span>
+
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" required>
+        <span id="phoneError" class="error"></span>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+        <span id="ageError" class="error"></span>
+
+        <input type="submit" value="Register">
+    </form>
+
+    <!-- Output Section -->
+    <div id="output">
+        <h2>Submitted Information</h2>
+        <div id="submittedInfo"></div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("regForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        validateForm();
+    });
+
+    
+    function validateForm() {
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let phoneNumber = document.getElementById("phoneNumber").value.trim();
+    let age = document.getElementById("age").value;
+
+    document.getElementById("nameError").textContent = "";
+    document.getElementById("emailError").textContent = "";
+    document.getElementById("phoneError").textContent = "";
+    document.getElementById("ageError").textContent = "";
+
+    if (name === "") {
+        document.getElementById("nameError").textContent = "Name is required";
+        return false;
+    }
+
+    if (email === "") {
+        document.getElementById("emailError").textContent = "Email is required";
+        return false;
+    } else if (!validateEmail(email)) {
+        document.getElementById("emailError").textContent = "Please enter a valid email address";
+        return false;
+    }
+
+    if (phoneNumber === "") {
+        document.getElementById("phoneError").textContent = "Phone Number is required";
+        return false;
+    } else if (!validatePhoneNumber(phoneNumber)) {
+        document.getElementById("phoneError").textContent = "Please enter a valid 10-digit phone number";
+        return false;
+    }
+
+    if (age === "") {
+        document.getElementById("ageError").textContent = "Age is required";
+        return false;
+    }
+
+    displayInfo(name, email, phoneNumber, age);
+    return false;
+}
+
+function validatePhoneNumber(phoneNumber) {
+    const re = /^\d{10}$/;
+    return re.test(phoneNumber);
+}
+
+
+</script>
+</body>
+</html>
